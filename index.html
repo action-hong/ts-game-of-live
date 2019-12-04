@@ -5,15 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="./require.js" data-main="main" type="text/javascript"></script>
   <style>
     #canvas {
       border: 1px solid black;
       margin: 30px auto;
       display: block;
     }
+
+    .navigator {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
+  <p class="navigator">
+    <button id="generate">生成</button>
+    <button id="next">下一回合</button>
+    <button id="run">运行</button>
+    <button id="stop">暂停</button>
+  </p>
   <canvas id="canvas" width="400" height="400"></canvas>
 </body>
 <script src="./bundle.js"></script>

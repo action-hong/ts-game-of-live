@@ -3,7 +3,7 @@
     "outDir": "dist",
     "outFile": "bundle.js",
     "strictNullChecks": true,
-    "target": "ES5",
+    "target": "ES6",
     "sourceMap": true,
     "module": "AMD"
   }
