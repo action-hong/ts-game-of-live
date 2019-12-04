@@ -44,8 +44,31 @@ type QuestionCollection<T extends Answers = Answers> =
         | DistinctConfig<T>
         | ReadonlyArray<DistinctConfig<T>>
 
+// interface Person<T> {
+//   name: string
+//   age: number,
+//   data: T
+// }
+
+// type xx<T> = ReadonlyArray<Person<T>> | Person<T>
+
+// function foo<T> (p: xx<T>) {
+//   if ()
+// }
+
+function isDistinctConfig<T> (configs: QuestionCollection<T>): configs is DistinctConfig<T> {
+  return (<DistinctConfig<T>>configs).name !== undefined
+}
+
 // function createConfig<T> (configs: QuestionCollection<T>): T {
 //   // 为毛这里不能 识别出configs ?
+//   if (isDistinctConfig(configs)) {
+//     return {
+//       [configs.name]: configs.value
+//     }
+//   } else {
+    
+//   }
 // }
 
 export const config = [
@@ -74,9 +97,5 @@ export const config = [
     type: 'range'
   }
 ]
-
-
-
-// export const kkConfig = createConfig(config)
 
 // 如何取出数组里面每个
