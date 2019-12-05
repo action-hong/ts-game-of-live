@@ -1,13 +1,10 @@
 export default {
-  fps: 500,
   dieColor: '#3e3e3e',
-  liveColor: '#ff0000',
-  // 值越大, 生成的越多
-  threshold: 50
+  liveColor: '#ff0000'
 }
 
-interface Config {
-  name: string
+interface Config<T extends string> {
+  name: T
   show: string
   type: 'range'
   min: number
@@ -15,55 +12,23 @@ interface Config {
   value: number
 }
 
-type LiteralUnion<T extends F, F = string> = T | (F & {});
-
-type KeyUnion<T> = LiteralUnion<Extract<keyof T, string>>;
-
-// let t: KeyUnion<Config> = 
-
-interface Answers extends Record<string, any> { }
-
-interface Question<T extends Answers = Answers> {
-  name: KeyUnion<T>
-  show: string
-  type: string
-  value: number
-  min: number
-  max: number
+type ResultObject<T extends string> = {
+  [K in T]: number
 }
 
-interface RangeQuestion<T extends Answers = Answers> extends Question<T> {
-  type: 'input'
+function generate<T extends string>(configs: Config<T>[]): ResultObject<T> {
+  const obj = {} as ResultObject<T>
+  configs.forEach(c => {
+    obj[c.name] = c.value
+  })
+  return obj
 }
 
-interface QuestionMap<T extends Answers = Answers> {
-  range: RangeQuestion<T>
+function wrap<T extends string>(configs: Config<T>[]) {
+  return configs
 }
 
-type DistinctConfig<T extends Answers = Answers> = QuestionMap<T>[keyof QuestionMap<T>]
-
-type QuestionCollection<T extends Answers = Answers> =
-        | DistinctConfig<T>
-        | ReadonlyArray<DistinctConfig<T>>
-
-function isDistinctConfig<T> (configs: QuestionCollection<T>): configs is DistinctConfig<T> {
-  return (<DistinctConfig<T>>configs).name !== undefined
-}
-
-// function createConfig<T> (configs: QuestionCollection<T>): T {
-//   // 为毛这里不能 识别出configs ?
-//   if (isDistinctConfig(configs)) {
-    
-//   } else {
-    
-//   }
-// }
-
-// createConfig([
-  
-// ])
-
-export const config = [
+export const descriptions = wrap([
   {
     name: 'fps',
     show: '演变速度',
@@ -83,11 +48,13 @@ export const config = [
   {
     name: 'count',
     show: '生成细胞数',
-    value: 400,
-    min: 100,
-    max: 2500,
+    value: 20,
+    min: 10,
+    max: 50,
     type: 'range'
   }
-]
+])
+
+export const config = generate(descriptions)
 
 // 如何取出数组里面每个

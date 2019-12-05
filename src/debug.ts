@@ -11,10 +11,11 @@ export const debug = (selector: string) => {
 
   descriptions.forEach(v => {
     const input = es(`input[data-value=${v.name}]`) as HTMLInputElement
-    const value = input.valueAsNumber
-    config[v.name] = value
-    const label = input.closest('label')!.querySelector('.kk_label')
-    label!.innerHTML = input.value
+    input.addEventListener('input', () => {
+      const value = input.valueAsNumber
+      config[v.name] = value
+      const label = input.closest('label')!.querySelector('.kk_label')
+      label!.innerHTML = input.value
+    })
   })
-  
 }
