@@ -1,6 +1,5 @@
 import config from './config'
-
-const random = () => Math.random() * 100 < config.threshold ? 1 : 0
+import { random } from './utils'
 
 const cellColors = [config.dieColor, config.liveColor]
 

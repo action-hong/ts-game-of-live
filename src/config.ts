@@ -19,6 +19,8 @@ type LiteralUnion<T extends F, F = string> = T | (F & {});
 
 type KeyUnion<T> = LiteralUnion<Extract<keyof T, string>>;
 
+// let t: KeyUnion<Config> = 
+
 interface Answers extends Record<string, any> { }
 
 interface Question<T extends Answers = Answers> {
@@ -44,18 +46,6 @@ type QuestionCollection<T extends Answers = Answers> =
         | DistinctConfig<T>
         | ReadonlyArray<DistinctConfig<T>>
 
-// interface Person<T> {
-//   name: string
-//   age: number,
-//   data: T
-// }
-
-// type xx<T> = ReadonlyArray<Person<T>> | Person<T>
-
-// function foo<T> (p: xx<T>) {
-//   if ()
-// }
-
 function isDistinctConfig<T> (configs: QuestionCollection<T>): configs is DistinctConfig<T> {
   return (<DistinctConfig<T>>configs).name !== undefined
 }
@@ -63,13 +53,15 @@ function isDistinctConfig<T> (configs: QuestionCollection<T>): configs is Distin
 // function createConfig<T> (configs: QuestionCollection<T>): T {
 //   // 为毛这里不能 识别出configs ?
 //   if (isDistinctConfig(configs)) {
-//     return {
-//       [configs.name]: configs.value
-//     }
+    
 //   } else {
     
 //   }
 // }
+
+// createConfig([
+  
+// ])
 
 export const config = [
   {

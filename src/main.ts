@@ -1,6 +1,7 @@
 import { CellGroup } from './core'
-import config from './config'
-const es = (e: string) => document.querySelector(e)
+import { config } from './config'
+import { es } from './utils'
+import { debug } from './debug'
 
 const canvas: HTMLCanvasElement = es('#canvas') as HTMLCanvasElement
 const generateBtn = es('#generate') as HTMLButtonElement
@@ -53,9 +54,11 @@ function stopGame() {
 function generate() {
   console.log('生成')
   ctx.clearRect(0, 0, w, h)
-  cellGroup = new CellGroup(ctx, 10, 10, w, h)
+  cellGroup = new CellGroup(ctx, config.count, config.count, w, h)
   draw()
 }
+
+debug('#config')
 
 generateBtn.onclick = generate
 nextBtn.onclick = next
