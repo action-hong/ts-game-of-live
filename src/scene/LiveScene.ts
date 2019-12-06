@@ -8,6 +8,13 @@ const titleHeight = 50
 
 export default class LiveScene extends Scene {
   cells: Cell[][] = []
+  // 当前回合
+  currentRound = 1
+  // 总共的数
+  cellCount = 0
+  // 当前回合绘制数(如果是0的话, 显然就没必要再运行了)
+  drawCount = 0
+  cellW = 0
   constructor(
     public game: Game,
     public count: number
@@ -16,17 +23,18 @@ export default class LiveScene extends Scene {
     this.init()
   }
   init() {
+    this.cellCount = this.count * this.count
     // 计算每个的宽度
-    const cellW = this.w / this.count
+    this.cellW = this.w / this.count
     for (let i = 0; i < this.count; i++) {
       const rows: Cell[] = []
       for (let j = 0; j < this.count; j++) {
         const cell = new Cell(
           this,
           random(),
-          j * cellW,
-          i * cellW + titleHeight,
-          cellW - 1,
+          j * this.cellW,
+          i * this.cellW + titleHeight,
+          this.cellW - 1,
           i,
           j
         )
@@ -35,6 +43,11 @@ export default class LiveScene extends Scene {
       }
       this.cells.push(rows)
     }
+  }
+
+  update () {
+    this.drawCount = 0
+    super.update()
   }
 
   getNextState(row: number, col: number): kk.CellState {
@@ -46,6 +59,15 @@ export default class LiveScene extends Scene {
       return 1
     }
     return 0
+  }
+
+  onClick(x: number, y: number) {
+    // 找出各个点
+    y -= titleHeight
+    const row = Math.floor(y / this.cellW)
+    const col = Math.floor(x / this.cellW)
+    const cell = this.cells[row][col]
+    cell.changeState()
   }
 
   /**

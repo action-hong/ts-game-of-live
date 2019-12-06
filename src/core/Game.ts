@@ -1,10 +1,11 @@
 import { config } from "../config"
 import { es } from "../utils"
+import Scene from "./Scene"
 
 export default class Game implements kk.Canvas {
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
-  scene?: kk.Canvas
+  scene?: Scene
   runLoop: boolean
   loopTimeId: number | null
   w: number
@@ -14,6 +15,20 @@ export default class Game implements kk.Canvas {
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D
     this.w = this.canvas.width
     this.h = this.canvas.height
+    this.register()
+  }
+
+  register() {
+    this.canvas.addEventListener('click', e => {
+      const x = e.offsetX
+      const y = e.offsetY
+      this._onClick(x, y)
+    })
+  }
+  _onClick(x: number, y: number) {
+    if (this.scene && !this.runLoop) {
+      this.scene.onClick(x, y)
+    }
   }
 
   update() {
@@ -57,7 +72,7 @@ export default class Game implements kk.Canvas {
   }
 
   // 装载场景
-  load(scene: kk.Canvas) {
+  load(scene: Scene) {
     this.reset()
     this.scene = scene
   }

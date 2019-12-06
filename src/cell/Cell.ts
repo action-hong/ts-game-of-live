@@ -23,8 +23,15 @@ export default class Cell implements kk.Canvas {
 
   draw() {
     if (this.state === this.nextState) return
+    this.scene.drawCount++
     this.state = this.nextState
     this.scene.ctx.fillStyle = cellColors[this.nextState]
     this.scene.ctx.fillRect(this.x, this.y, this.w, this.w)
+  }
+
+  // 死变生, 生变死
+  changeState() {
+    this.nextState = this.state === 1 ? 0 : 1
+    this.draw()
   }
 }

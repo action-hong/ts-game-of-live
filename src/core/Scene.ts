@@ -31,5 +31,7 @@ export default class Scene implements kk.Canvas {
       this.elements.splice(idx, 1)
     }
   }
+
+  onClick(x: number, y: number) {}
   
 }
