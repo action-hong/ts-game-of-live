@@ -33,9 +33,9 @@ export const descriptions = wrap([
     name: 'fps',
     show: '演变速度',
     type: 'range',
-    value: 500,
-    min: 10,
-    max: 1000
+    value: 60,
+    min: 1,
+    max: 200
   },
   {
     name: 'thresold',
