@@ -83,12 +83,12 @@ export class CellGroup {
         this.cells[i][j].draw()
       }
     }
-    // const msg = this.cells.map(items => {
-    //   return '\n' + items.map(({ state }) => {
-    //     return state === 1 ? 'o' : 'x'
-    //   }).join(' | ') + '\n' + items.map(_ => '_').join('   ')
-    // }).join('\n')
-    // console.log(msg)
+    const msg = this.cells.map(items => {
+      return items.map(({ state }) => {
+        return state === 1 ? 'o' : 'x'
+      }).join('|')
+    }).join('\n')
+    console.log(msg)
   }
 
   nextRound() {
@@ -141,13 +141,13 @@ export class CellGroup {
 
     if (lr) {
       lr[col - 1] && lr[col - 1].state && count++
-      lr[col] && count++
+      lr[col].state && count++
       lr[col + 1] && lr[col + 1].state && count++
     }
 
     if (nr) {
       nr[col - 1] && nr[col - 1].state && count++
-      nr[col] && count++
+      nr[col].state && count++
       nr[col + 1] && nr[col + 1].state && count++
     }
 
